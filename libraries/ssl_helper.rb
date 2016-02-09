@@ -34,9 +34,8 @@ class SSL_PROCESSER
   def self.check(type, ssl_data)
     if ssl_data[type].nil? || ssl_data[type].empty? || !ssl_data[type]
       fail "No such #{type} in data_bag file. Please add it first!"
-    else
-      true
     end
+    true
   end
 
   def self.fetch(type, ssl_data)

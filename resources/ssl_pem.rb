@@ -23,7 +23,6 @@ action :process do
   end
 
   dbag_data = SSL_HELPER.new(certs_dbag_name, cn)
-  pem = nil
 
   Chef::Log.info('Processing certificate')
   if dbag_data.check('certificate')

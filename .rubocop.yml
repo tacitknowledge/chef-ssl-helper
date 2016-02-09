@@ -1,0 +1,10 @@
+LineLength:
+  Max: 200 
+Style/TrailingBlankLines:
+  Enabled: false
+Style/FileName:
+  Enabled: false
+Style/ClassAndModuleCamelCase:
+  Enabled: false
+Documentation:
+  Enabled: false

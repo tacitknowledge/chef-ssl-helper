@@ -44,12 +44,9 @@ action :process do
 
   if SSL_HELPER.check_if_should_be_processed(key)
     Chef::Log.info('Processing keyfile')
-    if dbag_data.check('keyfile')
-      Chef::Log.info("Found valid entry in data bag for keyfile #{cn}")
-      create_ssl_key(dbag_data.fetch('keyfile'))
-      updated_by_last_action(@key.updated_by_last_action?)
-    else
-      fail "Failed to find an entry keyfile for #{cn}"
-    end
+    fail "Failed to find an entry keyfile for #{cn}" unless dbag_data.check('keyfile')
+    Chef::Log.info("Found valid entry in data bag for keyfile #{cn}")
+    create_ssl_key(dbag_data.fetch('keyfile'))
+    updated_by_last_action(@key.updated_by_last_action?)
   end
 end
