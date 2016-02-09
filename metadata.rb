@@ -1,0 +1,7 @@
+name 'ssl_helper'
+maintainer 'Tacit Knowledge'
+maintainer_email 'tk-chef@tacitkonwledge.com'
+license 'all_rights'
+description 'Installs/Configures ssl_helper'
+long_description 'Installs/Configures ssl_helper'
+version '0.1.1'

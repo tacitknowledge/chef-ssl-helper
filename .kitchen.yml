@@ -1,0 +1,17 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: debian-7.8
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ssl_helper::default]
+    attributes: {
+    }
+
