@@ -1,0 +1,1 @@
+# chef-ssl-helper
