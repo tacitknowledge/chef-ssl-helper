@@ -10,3 +10,27 @@ attribute :owner, :kind_of => String, :default => "root"
 attribute :group, :kind_of => String, :default => "root"
 attribute :mode, :kind_of => Integer, :default => 0400
 attribute :certs_dbag_name, :kind_of => String, :default => "certificates"
+
+action :process do
+
+  def create_ssl_ca(data)
+    @ca = file name do
+      content data
+      owner owner
+      group group
+      mode mode
+      backup false
+    end 
+  end 
+
+  dbag_data = SSL_HELPER.new(certs_dbag_name, authority)
+
+  Chef::Log.info("Processing CA certificate")
+  if dbag_data.check("certificate")
+    Chef::Log.info("Found valid entry in data bag for CA #{authority}")
+    create_ssl_ca(dbag_data.fetch("certificate"))
+  end 
+
+  updated_by_last_action(@ca.updated_by_last_action?)
+end
+
