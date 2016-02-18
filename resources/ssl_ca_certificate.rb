@@ -10,10 +10,10 @@ attribute :owner, kind_of: String, default: 'root'
 attribute :group, kind_of: String, default: 'root'
 attribute :mode, kind_of: Integer, default: 0400
 attribute :certs_dbag_name, kind_of: String, default: 'certificates'
+attribute :secret_file, kind_of: String, default: Chef::Config[:encrypted_data_bag_secret]
 
 action :process do
-
-  dbag_data = SSL_HELPER.new(certs_dbag_name, authority)
+  dbag_data = SSL_HELPER.new(certs_dbag_name, authority, secret_file)
 
   Chef::Log.info('Processing CA certificate')
   if dbag_data.check('certificate')

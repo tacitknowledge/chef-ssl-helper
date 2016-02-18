@@ -1,14 +1,16 @@
 # Copyright (c) 2016 Tacit Knowledge, All Rights Reserved.
 
 class SSL_HELPER
-  def initialize(dbag, id)
+  def initialize(dbag, id, secret)
     @id = id
     @dbag = dbag
+    @secret = secret
     ssl_data
   end
 
   def ssl_data
-    @ssl_data = Chef::EncryptedDataBagItem.load(@dbag, @id)
+    secret = Chef::EncryptedDataBagItem.load_secret(@secret)
+    @ssl_data = Chef::EncryptedDataBagItem.load(@dbag, @id, secret)
   rescue
     raise "No such data bag,data bag item #{@id} or node doesn't have encrypted_data_bag_secret key!"
   end
@@ -33,7 +35,7 @@ end
 class SSL_PROCESSER
   def self.check(type, ssl_data)
     if ssl_data[type].nil? || ssl_data[type].empty? || !ssl_data[type]
-      fail "No such #{type} in data_bag file. Please add it first!"
+      raise "No such #{type} in data_bag file. Please add it first!"
     end
     true
   end
