@@ -12,15 +12,6 @@ attribute :mode, kind_of: Integer, default: 0400
 attribute :certs_dbag_name, kind_of: String, default: 'certificates'
 
 action :process do
-  def create_ssl_pem(data)
-    @f = file name do
-      content data
-      owner owner
-      group group
-      mode mode
-      backup false
-    end
-  end
 
   dbag_data = SSL_HELPER.new(certs_dbag_name, cn)
 
@@ -39,7 +30,14 @@ action :process do
   Chef::Log.info('Creating PEM file')
 
   pem = cert + "\n" + key
-  create_ssl_pem(pem)
+  @f = file name do
+    content pem
+    owner owner
+    group group
+    mode mode
+    backup false
+  end
 
   updated_by_last_action(@f.updated_by_last_action?)
 end
+
